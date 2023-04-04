@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.tiktaktoe'
+    namespace 'com.greencode27.tiktaktoe'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.tiktaktoe"
+        applicationId "com.greencode27.tiktaktoe"
         minSdk 24
         targetSdk 33
         versionCode 1

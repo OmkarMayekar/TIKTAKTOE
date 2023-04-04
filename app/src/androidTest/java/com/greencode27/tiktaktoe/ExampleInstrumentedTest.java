@@ -1,4 +1,4 @@
-package com.example.tiktaktoe;
+package com.greencode27.tiktaktoe;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.tiktaktoe", appContext.getPackageName());
+        assertEquals("com.greencode27.tiktaktoe", appContext.getPackageName());
     }
 }

@@ -1,13 +1,17 @@
-package com.example.tiktaktoe;
+package com.greencode27.tiktaktoe;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-
+    Button bt;
     boolean gameActive = true;
 
     // Player Representation
@@ -27,13 +31,11 @@ public class MainActivity extends AppCompatActivity {
             {0,4,8}, {2,4,6}};
 
     public void playerTap(View view){
-
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
+        mp.start();
         ImageView img = (ImageView) view;
         int tappedImage = Integer.parseInt(img.getTag().toString());
         if(!gameActive){
-            gameReset(view);
-        }
-        if(gameState[tappedImage] == 1) {
             gameReset(view);
         }
         if(gameState[tappedImage] == 2) {
@@ -110,6 +112,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+        bt = (Button)findViewById(R.id.custom_button);
+        final MediaPlayer mp1 = MediaPlayer.create(this, R.raw.reset_sound);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mp1.start();
+                    gameReset(view);
+            }
+        });
     }
 }
