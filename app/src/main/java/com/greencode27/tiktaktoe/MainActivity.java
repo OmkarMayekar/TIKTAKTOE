@@ -1,6 +1,8 @@
 package com.greencode27.tiktaktoe;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,11 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     Button bt;
     boolean gameActive = true;
+    boolean winnerDisplayed = false;
+    int playerOneScoreCount = 0;
+    int playerTwoScoreCount = 0;
 
+    int noOfRoundsPlayed = 0;
     // Player Representation
     // 0 - X
     // 1 - O
@@ -29,13 +35,18 @@ public class MainActivity extends AppCompatActivity {
     int[][] winPositions = {{0,1,2}, {3,4,5}, {6,7,8},
             {0,3,6}, {1,4,7}, {2,5,8},
             {0,4,8}, {2,4,6}};
-
     public void playerTap(View view){
+        TextView playerOneScore = (TextView)findViewById(R.id.ScoreButton1);
+        TextView playerTwoScore = (TextView)findViewById(R.id.ScoreButton2);
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         mp.start();
         ImageView img = (ImageView) view;
         int tappedImage = Integer.parseInt(img.getTag().toString());
         if(!gameActive){
+            gameReset(view);
+        }
+        if(winnerDisplayed)
+        {
             gameReset(view);
         }
         if(gameState[tappedImage] == 2) {
@@ -67,22 +78,54 @@ public class MainActivity extends AppCompatActivity {
                 String winnerStr;
                 gameActive = false;
                 if(gameState[winPosition[0]] == 0){
+                    final MediaPlayer winner_sound = MediaPlayer.create(this, R.raw.winner_sound);
                     winnerStr = "X has won";
-                    View linerView = (View) findViewById(R.id.linearLayout);
-                    View imageView = (View) findViewById(R.id.imageView);
-                    View winner_view=(View)findViewById(R.id.gifImageView);
-                    linerView.setVisibility(View.GONE);
-                    imageView.setVisibility(View.GONE);
-                    winner_view.setVisibility(View.VISIBLE);
+                    noOfRoundsPlayed++;
+                    playerOneScoreCount++;
+                    if(playerTwoScoreCount > 0) {
+                        playerTwoScoreCount--;
+                    }
+                    playerOneScore.setText("Player1: " + Integer.toString(playerOneScoreCount));
+                    playerTwoScore.setText("Player2: " + Integer.toString(playerTwoScoreCount));
+                    if(noOfRoundsPlayed == 3) {
+                        winnerDisplayed=true;
+                        winner_sound.start();
+                        View linerView = (View) findViewById(R.id.linearLayout);
+                        View imageView = (View) findViewById(R.id.imageView);
+                        View winner_view = (View) findViewById(R.id.gifImageView);
+                        linerView.setVisibility(View.GONE);
+                        imageView.setVisibility(View.GONE);
+                        winner_view.setVisibility(View.VISIBLE);
+                    }
+                    View score_view1 = (View) findViewById(R.id.ScoreButton1);
+                    View score_view2 = (View) findViewById(R.id.ScoreButton2);
+                    score_view1.setVisibility(View.VISIBLE);
+                    score_view2.setVisibility(View.VISIBLE);
                 }
                 else{
+                    final MediaPlayer winner_sound = MediaPlayer.create(this, R.raw.winner_sound);
                     winnerStr = "O has won";
-                    View linerView = (View) findViewById(R.id.linearLayout);
-                    View imageView = (View) findViewById(R.id.imageView);
-                    View winner_view=(View)findViewById(R.id.gifImageView);
-                    linerView.setVisibility(View.GONE);
-                    imageView.setVisibility(View.GONE);
-                    winner_view.setVisibility(View.VISIBLE);
+                    noOfRoundsPlayed++;
+                    playerTwoScoreCount++;
+                    if(playerOneScoreCount > 0) {
+                        playerOneScoreCount--;
+                    }
+                    playerOneScore.setText("Player1: "+Integer.toString(playerOneScoreCount));
+                    playerTwoScore.setText("Player2: "+Integer.toString(playerTwoScoreCount));
+                    if(noOfRoundsPlayed == 3) {
+                        winnerDisplayed=true;
+                        winner_sound.start();
+                        View linerView = (View) findViewById(R.id.linearLayout);
+                        View imageView = (View) findViewById(R.id.imageView);
+                        View winner_view = (View) findViewById(R.id.gifImageView);
+                        linerView.setVisibility(View.GONE);
+                        imageView.setVisibility(View.GONE);
+                        winner_view.setVisibility(View.VISIBLE);
+                    }
+                    View score_view1 = (View) findViewById(R.id.ScoreButton1);
+                    View score_view2 = (View) findViewById(R.id.ScoreButton2);
+                    score_view1.setVisibility(View.VISIBLE);
+                    score_view2.setVisibility(View.VISIBLE);
                 }
                 // Update the status bar for winner announcement
                 TextView status = findViewById(R.id.status);
@@ -92,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gameReset(View view) {
+        boolean winnerDisplayed = false;
+        int playerOneScoreCount = 0;
+        int playerTwoScoreCount = 0;
+        int noOfRoundsPlayed = 0;
         gameActive = true;
         activePlayer = 0;
         for(int i=0; i<gameState.length; i++){
@@ -129,6 +176,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mp1.start();
+                TextView playerOneScore = (TextView)findViewById(R.id.ScoreButton1);
+                TextView playerTwoScore = (TextView)findViewById(R.id.ScoreButton2);
+                playerOneScore.setText("Player1: "+Integer.toString(0));
+                playerTwoScore.setText("Player2: "+Integer.toString(0));
                 View linerView = (View) findViewById(R.id.linearLayout);
                 View imageView = (View) findViewById(R.id.imageView);
                 View winner_view=(View)findViewById(R.id.gifImageView);
