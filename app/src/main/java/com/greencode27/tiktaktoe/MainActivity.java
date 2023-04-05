@@ -68,20 +68,27 @@ public class MainActivity extends AppCompatActivity {
                 gameActive = false;
                 if(gameState[winPosition[0]] == 0){
                     winnerStr = "X has won";
+                    View linerView = (View) findViewById(R.id.linearLayout);
+                    View imageView = (View) findViewById(R.id.imageView);
+                    View winner_view=(View)findViewById(R.id.gifImageView);
+                    linerView.setVisibility(View.GONE);
+                    imageView.setVisibility(View.GONE);
+                    winner_view.setVisibility(View.VISIBLE);
                 }
                 else{
                     winnerStr = "O has won";
+                    View linerView = (View) findViewById(R.id.linearLayout);
+                    View imageView = (View) findViewById(R.id.imageView);
+                    View winner_view=(View)findViewById(R.id.gifImageView);
+                    linerView.setVisibility(View.GONE);
+                    imageView.setVisibility(View.GONE);
+                    winner_view.setVisibility(View.VISIBLE);
                 }
                 // Update the status bar for winner announcement
                 TextView status = findViewById(R.id.status);
                 status.setText(winnerStr);
-
             }
-
-
-
         }
-
     }
 
     public void gameReset(View view) {
@@ -122,7 +129,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mp1.start();
-                    gameReset(view);
+                View linerView = (View) findViewById(R.id.linearLayout);
+                View imageView = (View) findViewById(R.id.imageView);
+                View winner_view=(View)findViewById(R.id.gifImageView);
+                linerView.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
+                winner_view.setVisibility(View.GONE);
+                gameReset(view);
             }
         });
     }
