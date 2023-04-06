@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/heading"
+        android:textSize="28sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:fontFamily="@font/architects_daughter" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/win_gif"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="394dp"
+        android:layout_height="426dp"
+        android:contentDescription="@string/grid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="370dp"
+        android:layout_height="426dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+
+            <ImageView
+                android:id="@+id/imageView0"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="0"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="1"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="2"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="3"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="4"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="5"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="6"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="7"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <ImageView
+                android:id="@+id/imageView8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:background="@color/purple_200"
+                android:onClick="playerTap"
+                android:padding="20sp"
+                android:tag="8"
+                tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/LinearLayoutScore"
+        android:layout_width="400dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.750" >
+
+        <TextView
+            android:id="@+id/ScoreButton1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="#757170"
+            android:onClick="playerTap"
+            android:padding="20sp"
+            android:tag="8"
+            android:text="0"
+            android:textSize="35dp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/ScoreButton2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="3dp"
+            android:layout_weight="1"
+            android:background="#757170"
+            android:onClick="playerTap"
+            android:padding="20sp"
+            android:tag="8"
+            android:text="0"
+            android:textSize="35dp"
+            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15sp"
+        android:fontFamily="@font/atomic_age"
+        android:text="X's Turn - Tap To Play"
+        android:textColor="#FF5722"
+        android:textSize="25sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.991" />
+
+    <Button
+        android:id="@+id/custom_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_button"
+        android:rotationX="17"
+        android:text="Reset Game!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.868" />
+
+<!--    <Button-->
+<!--        android:id="@+id/button2"-->
+<!--        android:layout_width="127dp"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:text="Player 1 Score"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.018"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.84" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button4"-->
+<!--        android:layout_width="127dp"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:text="Player 2 Score"-->
+<!--        tools:layout_editor_absoluteX="306dp"-->
+<!--        tools:layout_editor_absoluteY="577dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.84"/>-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
