@@ -1,8 +1,6 @@
 package com.greencode27.tiktaktoe;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -18,12 +16,10 @@ public class MainActivity extends AppCompatActivity {
     boolean winnerDisplayed = false;
     int playerOneScoreCount = 0;
     int playerTwoScoreCount = 0;
-
     int noOfRoundsPlayed = 0;
     // Player Representation
     // 0 - X
     // 1 - O
-
     int activePlayer = 0;
     int[] gameState = {2,2,2,2,2,2,2,2,2};
 
@@ -31,22 +27,16 @@ public class MainActivity extends AppCompatActivity {
     // 0 - X
     // 1 - O
     // 2 - Null
-
     int[][] winPositions = {{0,1,2}, {3,4,5}, {6,7,8},
             {0,3,6}, {1,4,7}, {2,5,8},
             {0,4,8}, {2,4,6}};
     public void playerTap(View view){
-        TextView playerOneScore = (TextView)findViewById(R.id.ScoreButton1);
-        TextView playerTwoScore = (TextView)findViewById(R.id.ScoreButton2);
+        System.out.println("gameActive =============> "+gameActive);
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         mp.start();
         ImageView img = (ImageView) view;
         int tappedImage = Integer.parseInt(img.getTag().toString());
-        if(!gameActive){
-            gameReset(view);
-        }
-        if(winnerDisplayed)
-        {
+        if(!gameActive || winnerDisplayed){
             gameReset(view);
         }
         if(gameState[tappedImage] == 2) {
@@ -54,18 +44,16 @@ public class MainActivity extends AppCompatActivity {
             img.setTranslationY(-1000f);
             if (activePlayer == 0) {
                 img.setImageResource(R.drawable.x);
+                gameActive=true;
                 activePlayer = 1;
-
                 TextView status = findViewById(R.id.status);
                 status.setText("O's Turn - Tap to play");
-
             } else {
                 img.setImageResource(R.drawable.o);
+                gameActive=true;
                 activePlayer = 0;
-
                 TextView status = findViewById(R.id.status);
                 status.setText("X's Turn - Tap to play");
-
             }
             img.animate().translationYBy(1000f).setDuration(300);
         }
@@ -78,54 +66,16 @@ public class MainActivity extends AppCompatActivity {
                 String winnerStr;
                 gameActive = false;
                 if(gameState[winPosition[0]] == 0){
-                    final MediaPlayer winner_sound = MediaPlayer.create(this, R.raw.winner_sound);
                     winnerStr = "X has won";
-                    noOfRoundsPlayed++;
                     playerOneScoreCount++;
-                    if(playerTwoScoreCount > 0) {
-                        playerTwoScoreCount--;
-                    }
-                    playerOneScore.setText("Player1: " + Integer.toString(playerOneScoreCount));
-                    playerTwoScore.setText("Player2: " + Integer.toString(playerTwoScoreCount));
-                    if(noOfRoundsPlayed == 3) {
-                        winnerDisplayed=true;
-                        winner_sound.start();
-                        View linerView = (View) findViewById(R.id.linearLayout);
-                        View imageView = (View) findViewById(R.id.imageView);
-                        View winner_view = (View) findViewById(R.id.gifImageView);
-                        linerView.setVisibility(View.GONE);
-                        imageView.setVisibility(View.GONE);
-                        winner_view.setVisibility(View.VISIBLE);
-                    }
-                    View score_view1 = (View) findViewById(R.id.ScoreButton1);
-                    View score_view2 = (View) findViewById(R.id.ScoreButton2);
-                    score_view1.setVisibility(View.VISIBLE);
-                    score_view2.setVisibility(View.VISIBLE);
+                    showScore(playerOneScoreCount,playerTwoScoreCount);
+                    showWinningPlayer();
                 }
                 else{
-                    final MediaPlayer winner_sound = MediaPlayer.create(this, R.raw.winner_sound);
                     winnerStr = "O has won";
-                    noOfRoundsPlayed++;
                     playerTwoScoreCount++;
-                    if(playerOneScoreCount > 0) {
-                        playerOneScoreCount--;
-                    }
-                    playerOneScore.setText("Player1: "+Integer.toString(playerOneScoreCount));
-                    playerTwoScore.setText("Player2: "+Integer.toString(playerTwoScoreCount));
-                    if(noOfRoundsPlayed == 3) {
-                        winnerDisplayed=true;
-                        winner_sound.start();
-                        View linerView = (View) findViewById(R.id.linearLayout);
-                        View imageView = (View) findViewById(R.id.imageView);
-                        View winner_view = (View) findViewById(R.id.gifImageView);
-                        linerView.setVisibility(View.GONE);
-                        imageView.setVisibility(View.GONE);
-                        winner_view.setVisibility(View.VISIBLE);
-                    }
-                    View score_view1 = (View) findViewById(R.id.ScoreButton1);
-                    View score_view2 = (View) findViewById(R.id.ScoreButton2);
-                    score_view1.setVisibility(View.VISIBLE);
-                    score_view2.setVisibility(View.VISIBLE);
+                    showScore(playerOneScoreCount,playerTwoScoreCount);
+                    showWinningPlayer();
                 }
                 // Update the status bar for winner announcement
                 TextView status = findViewById(R.id.status);
@@ -134,16 +84,62 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void gameReset(View view) {
-        boolean winnerDisplayed = false;
-        int playerOneScoreCount = 0;
-        int playerTwoScoreCount = 0;
-        int noOfRoundsPlayed = 0;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_main);
+        resetScore();
+        bt = (Button)findViewById(R.id.custom_button);
+        final MediaPlayer mp1 = MediaPlayer.create(this, R.raw.reset_sound);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resetButtonClicked(mp1);
+                gameReset(view);
+            }
+        });
+    }
+
+    private void resetScore() {
+        showScore(0, 0);
+    }
+
+    private void resetButtonClicked(MediaPlayer mp1) {
+        resetVariables();
+        mp1.start();
+        resetScore();
+        View linerView = (View) findViewById(R.id.linearLayout);
+        View imageView = (View) findViewById(R.id.imageView);
+        View winner_view=(View)findViewById(R.id.gifImageView);
+        linerView.setVisibility(View.VISIBLE);
+        imageView.setVisibility(View.VISIBLE);
+        winner_view.setVisibility(View.GONE);
+    }
+    private void resetVariables() {
+        winnerDisplayed = false;
         gameActive = true;
+        playerOneScoreCount = 0;
+        playerTwoScoreCount = 0;
+        noOfRoundsPlayed = 0;
         activePlayer = 0;
+    }
+
+    public void gameReset(View view) {
+        if(winnerDisplayed) {
+            resetVariables();
+        }
         for(int i=0; i<gameState.length; i++){
             gameState[i] = 2;
         }
+        resetGrid();
+        TextView status = findViewById(R.id.status);
+        status.setText("X's Turn - Tap to play");
+    }
+
+    private void resetGrid() {
         ((ImageView)findViewById(R.id.imageView0)).setImageResource(0);
         ((ImageView)findViewById(R.id.imageView1)).setImageResource(0);
         ((ImageView)findViewById(R.id.imageView2)).setImageResource(0);
@@ -153,41 +149,38 @@ public class MainActivity extends AppCompatActivity {
         ((ImageView)findViewById(R.id.imageView6)).setImageResource(0);
         ((ImageView)findViewById(R.id.imageView7)).setImageResource(0);
         ((ImageView)findViewById(R.id.imageView8)).setImageResource(0);
-
-        TextView status = findViewById(R.id.status);
-        status.setText("X's Turn - Tap to play");
-
     }
 
-
-
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
-        bt = (Button)findViewById(R.id.custom_button);
-        final MediaPlayer mp1 = MediaPlayer.create(this, R.raw.reset_sound);
-        bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mp1.start();
-                TextView playerOneScore = (TextView)findViewById(R.id.ScoreButton1);
-                TextView playerTwoScore = (TextView)findViewById(R.id.ScoreButton2);
-                playerOneScore.setText("Player1: "+Integer.toString(0));
-                playerTwoScore.setText("Player2: "+Integer.toString(0));
-                View linerView = (View) findViewById(R.id.linearLayout);
-                View imageView = (View) findViewById(R.id.imageView);
-                View winner_view=(View)findViewById(R.id.gifImageView);
-                linerView.setVisibility(View.VISIBLE);
-                imageView.setVisibility(View.VISIBLE);
-                winner_view.setVisibility(View.GONE);
-                gameReset(view);
-            }
-        });
+    private void showWinningPlayer() {
+        final MediaPlayer winner_sound = MediaPlayer.create(this, R.raw.winner_sound);
+        showScore(playerOneScoreCount, playerTwoScoreCount);
+        noOfRoundsPlayed++;
+        if(noOfRoundsPlayed == 5) {
+            playerOneScoreCount = 0;
+            playerTwoScoreCount = 0;
+            noOfRoundsPlayed = 0;
+            activePlayer = 0;
+            gameActive = true;
+            winnerDisplayed=true;
+            winner_sound.start();
+            View linerView = (View) findViewById(R.id.linearLayout);
+            View imageView = (View) findViewById(R.id.imageView);
+            View winner_view = (View) findViewById(R.id.gifImageView);
+            linerView.setVisibility(View.GONE);
+            imageView.setVisibility(View.GONE);
+            winner_view.setVisibility(View.VISIBLE);
+        }
+        View score_view1 = (View) findViewById(R.id.ScoreButton1);
+        View score_view2 = (View) findViewById(R.id.ScoreButton2);
+        score_view1.setVisibility(View.VISIBLE);
+        score_view2.setVisibility(View.VISIBLE);
     }
+
+    private void showScore(int playerOneScoreCount, int playerTwoScoreCount) {
+        TextView playerOneScore = (TextView)findViewById(R.id.ScoreButton1);
+        TextView playerTwoScore = (TextView)findViewById(R.id.ScoreButton2);
+        playerOneScore.setText("Player1: " + Integer.toString(playerOneScoreCount));
+        playerTwoScore.setText("Player2: " + Integer.toString(playerTwoScoreCount));
+    }
+
 }
