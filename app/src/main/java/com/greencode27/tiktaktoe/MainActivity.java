@@ -1,6 +1,8 @@
 package com.greencode27.tiktaktoe;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +11,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button bt;
@@ -22,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     // 1 - O
     int activePlayer = 0;
     int[] gameState = {2,2,2,2,2,2,2,2,2};
+    List<Integer> tappedImageList = new ArrayList<>();
 
     // State Means
     // 0 - X
@@ -31,11 +38,16 @@ public class MainActivity extends AppCompatActivity {
             {0,3,6}, {1,4,7}, {2,5,8},
             {0,4,8}, {2,4,6}};
     public void playerTap(View view){
-        System.out.println("gameActive =============> "+gameActive);
         final MediaPlayer mp = MediaPlayer.create(this, R.raw.click);
         mp.start();
         ImageView img = (ImageView) view;
         int tappedImage = Integer.parseInt(img.getTag().toString());
+        tappedImageList.add(tappedImage);
+        if(tappedImageList.contains(0) && tappedImageList.contains(1) && tappedImageList.contains(2) && tappedImageList.contains(3) && tappedImageList.contains(4) && tappedImageList.contains(5) && tappedImageList.contains(7) && tappedImageList.contains(8))
+        {
+            showDrawDailogueBox();
+            gameReset(view);
+        }
         if(!gameActive || winnerDisplayed){
             gameReset(view);
         }
@@ -84,6 +96,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void showDrawDailogueBox() {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        dialog.setMessage("THERE WAS A DRAW!!");
+        dialog.setTitle("DRAW");
+        dialog.setPositiveButton("OK!",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Toast.makeText(getApplicationContext(),"Ok is clicked",Toast.LENGTH_LONG).show();
+                    }
+                });
+        AlertDialog alertDialog=dialog.create();
+        alertDialog.show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gameReset(View view) {
+        tappedImageList.clear();
         if(winnerDisplayed) {
             resetVariables();
         }
