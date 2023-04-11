@@ -287,30 +287,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.868" />
-
-<!--    <Button-->
-<!--        android:id="@+id/button2"-->
-<!--        android:layout_width="127dp"-->
-<!--        android:layout_height="55dp"-->
-<!--        android:text="Player 1 Score"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.018"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.84" />-->
-
-<!--    <Button-->
-<!--        android:id="@+id/button4"-->
-<!--        android:layout_width="127dp"-->
-<!--        android:layout_height="55dp"-->
-<!--        android:text="Player 2 Score"-->
-<!--        tools:layout_editor_absoluteX="306dp"-->
-<!--        tools:layout_editor_absoluteY="577dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.84"/>-->
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

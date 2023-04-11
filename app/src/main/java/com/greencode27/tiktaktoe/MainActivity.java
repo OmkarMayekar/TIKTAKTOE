@@ -1,10 +1,14 @@
 package com.greencode27.tiktaktoe;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -45,11 +49,23 @@ public class MainActivity extends AppCompatActivity {
         tappedImageList.add(tappedImage);
         if(tappedImageList.contains(0) && tappedImageList.contains(1) && tappedImageList.contains(2) && tappedImageList.contains(3) && tappedImageList.contains(4) && tappedImageList.contains(5) && tappedImageList.contains(7) && tappedImageList.contains(8))
         {
-            showDrawDailogueBox();
-            gameReset(view);
+            showDailogueBox(this,"Woo! It's a draw!!");
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    gameReset(view);
+                }
+            }, 100);
         }
         if(!gameActive || winnerDisplayed){
-            gameReset(view);
+            final Handler handler = new Handler(Looper.getMainLooper());
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    gameReset(view);
+                }
+            }, 100);
         }
         if(gameState[tappedImage] == 2) {
             gameState[tappedImage] = activePlayer;
@@ -79,14 +95,30 @@ public class MainActivity extends AppCompatActivity {
                 gameActive = false;
                 if(gameState[winPosition[0]] == 0){
                     winnerStr = "X has won";
+                    showDailogueBox(this,"X has won");
                     playerOneScoreCount++;
                     showScore(playerOneScoreCount,playerTwoScoreCount);
+                    final Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            gameReset(view);
+                        }
+                    }, 100);
                     showWinningPlayer();
                 }
                 else{
                     winnerStr = "O has won";
+                    showDailogueBox(this,"O has won!!");
                     playerTwoScoreCount++;
                     showScore(playerOneScoreCount,playerTwoScoreCount);
+                    final Handler handler = new Handler(Looper.getMainLooper());
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            resetGrid();
+                        }
+                    }, 100);
                     showWinningPlayer();
                 }
                 // Update the status bar for winner announcement
@@ -96,15 +128,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showDrawDailogueBox() {
-        AlertDialog.Builder dialog=new AlertDialog.Builder(this);
-        dialog.setMessage("THERE WAS A DRAW!!");
-        dialog.setTitle("DRAW");
+    private void showDailogueBox(Context context, String msg) {
+        AlertDialog.Builder dialog=new AlertDialog.Builder(context);
+        dialog.setMessage(msg);
+        dialog.setTitle("TIKTAKTOE!!");
         dialog.setPositiveButton("OK!",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog,
                                         int which) {
-                        Toast.makeText(getApplicationContext(),"Ok is clicked",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Next round!!",Toast.LENGTH_LONG).show();
                     }
                 });
         AlertDialog alertDialog=dialog.create();
